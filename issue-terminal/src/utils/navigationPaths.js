@@ -21,6 +21,10 @@ const getNavigation = (loggedIn, user) => {
             link: "/"
         },
         {
+            title: "Issues",
+            link: "/issues"
+        },
+        {
             title: "Login",
             link: "/login"
         },

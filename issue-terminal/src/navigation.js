@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './pages/home/HomePage';
+import IssuesPage from './pages/issues/IssuesPage';
+import SingleIssuePage from './pages/singleIssue/IssuePage';
 
 class Navigation extends Component {
     state = {
@@ -21,11 +23,13 @@ class Navigation extends Component {
     }
 
     render() {
-        
+
         return (
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={HomePage} />
+                    <Route path="/issues" exact component={IssuesPage} />
+                    <Route path="/issues/:id" component={SingleIssuePage} />
                 </Switch>
             </BrowserRouter>
         );
