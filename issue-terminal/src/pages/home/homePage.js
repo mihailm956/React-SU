@@ -8,7 +8,7 @@ class homePage extends Component {
         return (
             <PageLayout>
                 <main className={style.Container}>
-                    HomePage
+                    Home Page
                 </main>
             </PageLayout>
         )

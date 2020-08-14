@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../../components/navigation/header/Header';
 import SideDrawer from '../navigation/sideDrawer/SideDrawer';
+import style from './page-layout.module.css';
 
 class PageLayout extends Component {
     state = {
@@ -13,7 +14,7 @@ class PageLayout extends Component {
     }
 
     sideDrawerToggleHandler = () => {
-        this.setState( { showSideDrawer: !this.state.showSideDrawer });
+        this.setState({ showSideDrawer: !this.state.showSideDrawer });
     }
 
     render() {
@@ -23,12 +24,14 @@ class PageLayout extends Component {
                     isAuth={this.props.isAuthenticated}
                     drawerToggleClicked={this.sideDrawerToggleHandler}
                 />
-                <SideDrawer 
-                     isAuth={this.props.isAuthenticated}
-                     open={this.state.showSideDrawer}
-                     closed={this.sideDrawerClosedHandler} 
+                <SideDrawer
+                    isAuth={this.props.isAuthenticated}
+                    open={this.state.showSideDrawer}
+                    closed={this.sideDrawerClosedHandler}
                 />
-                {this.props.children}
+                <div className={style.container}>
+                    {this.props.children}
+                </div>
             </div >
         );
     }
