@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 
-import style from './home-page.module.css';
 import PageLayout from '../../components/pageLayout/PageLayout';
+import style from './IssuePage.module.css';
 
-class homePage extends Component {
+class IssuePage extends Component {
     render() {
+        console.log(this.props.match.params.id);
         return (
             <PageLayout>
                 <main className={style.Container}>
-                    HomePage
+                    Single Issue page
                 </main>
             </PageLayout>
         )
     }
 }
 
-export default homePage;
+export default IssuePage;
