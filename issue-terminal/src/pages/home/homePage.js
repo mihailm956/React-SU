@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 
-import Header from '../../components/navigation/header/Header';
 import style from './home-page.module.css';
+import PageLayout from '../../components/pageLayout/PageLayout';
 
 class homePage extends Component {
     render() {
         return (
-            <div>
-                {/* {this.props.children} */}
-                <Header />
+            <PageLayout>
                 <main className={style.Container}>
                     HomePage
                 </main>
-            </div>
+            </PageLayout>
         )
     }
 }
