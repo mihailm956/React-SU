@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import style from './sign-up.module.css';
+import Input from '../../components/ui/input/Input';
 import StyledButton from '../../components/ui/styledButton/StyledButton';
 import Spinner from '../../components/ui/spinner/Spinner';
 import PageLayout from '../../components/pageLayout/PageLayout';
-import Input from '../../components/ui/input/Input';
 import { signUp } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 
 class RegisterPage extends Component {
@@ -130,4 +132,4 @@ class RegisterPage extends Component {
     };
 };
 
-export default RegisterPage;
+export default withErrorHandler(RegisterPage, axios);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import axios from 'axios';
 
 import style from './sign-in.module.css';
 import Input from '../../components/ui/input/Input';
@@ -8,6 +8,7 @@ import Spinner from '../../components/ui/spinner/Spinner';
 import PageLayout from '../../components/pageLayout/PageLayout';
 import { signIn } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class SignInPage extends Component {
     state = {
@@ -66,11 +67,11 @@ class SignInPage extends Component {
         this.setState({ loading: true });
 
         signIn(fieldData.email, fieldData.password)
-            .finally(() =>  this.setState({ loading: false }))
+            .finally(() => this.setState({ loading: false }))
             .then(result => {
                 console.log("[Sign-In] [custom promise] [result] " + result)
                 this.props.history.push(`/`);
-               
+
             })
             .catch((err) => {
                 console.log("[Sign-In] [custom promise] [reject] " + err)
@@ -117,4 +118,4 @@ class SignInPage extends Component {
     };
 };
 
-export default withRouter(SignInPage);
+export default withErrorHandler(SignInPage, axios);
