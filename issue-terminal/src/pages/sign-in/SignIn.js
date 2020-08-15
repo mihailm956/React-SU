@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import StyledButton from '../../components/ui/styledButton/StyledButton';
-import style from './register.module.css';
-import PageLayout from '../../components/pageLayout/PageLayout';
+import style from './sign-in.module.css';
 import Input from '../../components/ui/input/Input';
+import StyledButton from '../../components/ui/styledButton/StyledButton';
+import PageLayout from '../../components/pageLayout/PageLayout';
 
-class RegisterPage extends Component {
+class LogInPage extends Component {
     state = {
         controls: {
             email: {
@@ -27,20 +27,6 @@ class RegisterPage extends Component {
                 elementConfig: {
                     type: 'text',
                     placeholder: 'password'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            },
-            rePassword: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'repeat password'
                 },
                 value: '',
                 validation: {
@@ -86,8 +72,8 @@ class RegisterPage extends Component {
                 <form onSubmit={this.submitHandle} className={style.container}>
                     <div className={style.Container}>
                         {form}
-                        <br />
-                        <StyledButton title="Register" btnType="Success">REGISTER</StyledButton>
+                        <br/>
+                        <StyledButton title="Log in" btnType="Success">Login</StyledButton>
                     </div>
                 </form>
             </PageLayout>
@@ -95,4 +81,4 @@ class RegisterPage extends Component {
     };
 };
 
-export default RegisterPage;
+export default LogInPage;

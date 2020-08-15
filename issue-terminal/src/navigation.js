@@ -10,7 +10,7 @@ import IssuesPage from './pages/Issue/all-issues/IssuesPage';
 import SingleIssuePage from './pages/Issue/single-issue/IssuePage';
 import NewIssuePage from './pages/Issue/new-issue/NewIssue';
 import RegisterPage from './pages/register/Register';
-import LogInPage from './pages/login/LogIn';
+import LogInPage from './pages/sign-in/SignIn';
 
 class Navigation extends Component {
     state = {
