@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import PageLayout from '../../components/pageLayout/PageLayout';
+import PageLayout from '../../../components/pageLayout/PageLayout';
 import style from './IssuePage.module.css';
 
 class IssuePage extends Component {
