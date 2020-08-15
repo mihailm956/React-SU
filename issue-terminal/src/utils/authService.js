@@ -41,7 +41,7 @@ const signUp = (email, password, repassword) => {
     if (password !== repassword) {
         return new Promise((resolve, reject) => reject('passwords dont match'))
     }
-    
+
     return firebaseAuth(email, password, fbAuthUrls.signUp)
 }
 
@@ -53,7 +53,20 @@ const signOut = () => {
     localStorage.removeItem('expirationDate')
     localStorage.removeItem('userId');
     localStorage.removeItem('email');
+    localStorage.removeItem('autoSignIn');
 }
 
+const tryAutoSignIn = () => {
+    const token = localStorage.getItem('token');
 
-export { signUp, signIn, signOut };
+    if (token) {
+        localStorage.setItem('autoSignIn', true);
+        console.log("[authService] [tryAutoSignIn] true");
+        return true
+    }
+    
+    console.log("[authService] [tryAutoSignIn] false");
+    return false;
+}
+
+export { signUp, signIn, signOut, tryAutoSignIn };

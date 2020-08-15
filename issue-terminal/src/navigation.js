@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     BrowserRouter,
     Switch,
-    Route
+    Route,
+    Redirect
 } from 'react-router-dom';
 
 import HomePage from './pages/home/HomePage';
@@ -27,7 +28,7 @@ class Navigation extends Component {
     }
 
     render() {
-
+        console.log('[navigation] this.props.signedIn = ' + this.props.signedIn);
         return (
             <BrowserRouter>
                 <Switch>
@@ -36,8 +37,12 @@ class Navigation extends Component {
                     <Route path="/sign-in" component={SignInPage} />
                     <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
-                    <Route path="/issues/new" exact component={NewIssuePage} />
-                    <Route path="/issues/:id" component={SingleIssuePage} />
+                    <Route path="/issues/new" exact >
+                        {this.props.signedIn ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
+                    </Route>
+                    <Route path="/issues/:id" component={SingleIssuePage} >
+                        {this.props.signedIn ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
+                    </Route>
                 </Switch>
             </BrowserRouter>
         );

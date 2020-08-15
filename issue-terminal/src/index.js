@@ -4,13 +4,10 @@ import './index.css';
 import Authentication from './Authentication';
 import * as serviceWorker from './serviceWorker';
 
-import Navigation from './navigation';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Authentication>
-      <Navigation />
-    </Authentication>
+    <Authentication />
   </React.StrictMode>,
   document.getElementById('root')
 );
