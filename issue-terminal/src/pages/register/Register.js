@@ -4,6 +4,9 @@ import StyledButton from '../../components/ui/styledButton/StyledButton';
 import style from './register.module.css';
 import PageLayout from '../../components/pageLayout/PageLayout';
 import Input from '../../components/ui/input/Input';
+import { register } from '../../utils/firebaseService';
+import { updateObject, checkValidity } from '../../utils/utility';
+
 
 class RegisterPage extends Component {
     state = {
@@ -53,9 +56,32 @@ class RegisterPage extends Component {
         }
     }
 
+    inputChangedHandler = (event, controlName) => {
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName]: updateObject(this.state.controls[controlName], {
+                value: event.target.value,
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+                touched: true
+            })
+        })
+        this.setState({ controls: updatedControls })
+    };
 
-    submitHandle = async (event) => {
+    submitHandle = (event) => {
         event.preventDefault();
+
+        const fieldData = {
+            email:this.state.controls.email.value,
+            password: this.state.controls.password.value,
+            rePassword: this.state.controls.rePassword.value
+        }
+        console.log("[Register] [custom promise] [fieldData] ", fieldData)
+
+        register(fieldData.email, fieldData.password, fieldData.rePassword)
+            .then(result => console.log("[Register] [custom promise] [result] " + result))
+            .catch(err => console.log("[Register] [custom promise] [reject] " + err))
+        // register
+
     }
 
     render() {
