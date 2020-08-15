@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 
 import style from './sign-in.module.css';
 import Input from '../../components/ui/input/Input';
 import StyledButton from '../../components/ui/styledButton/StyledButton';
 import PageLayout from '../../components/pageLayout/PageLayout';
+import { signIn } from '../../utils/authService';
+import { updateObject, checkValidity } from '../../utils/utility';
 
-class LogInPage extends Component {
+class SignInPage extends Component {
     state = {
         controls: {
             email: {
@@ -39,9 +42,31 @@ class LogInPage extends Component {
         }
     }
 
+    inputChangedHandler = (event, controlName) => {
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName]: updateObject(this.state.controls[controlName], {
+                value: event.target.value,
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+                touched: true
+            })
+        })
+        this.setState({ controls: updatedControls })
+    };
 
     submitHandle = async (event) => {
         event.preventDefault();
+
+        const fieldData = {
+            email: this.state.controls.email.value,
+            password: this.state.controls.password.value,
+        }
+
+        signIn(fieldData.email, fieldData.password)
+            .then(result => {
+                console.log("[Sign-In] [custom promise] [result] " + result)
+                this.props.history.push(`/`);
+            })
+            .catch(err => console.log("[Sign-In] [custom promise] [reject] " + err))
     }
 
     render() {
@@ -66,14 +91,13 @@ class LogInPage extends Component {
             />
         ));
 
-
         return (
             <PageLayout>
                 <form onSubmit={this.submitHandle} className={style.container}>
                     <div className={style.Container}>
                         {form}
-                        <br/>
-                        <StyledButton title="Log in" btnType="Success">Login</StyledButton>
+                        <br />
+                        <StyledButton title="Log in" btnType="Success">SIGN IN</StyledButton>
                     </div>
                 </form>
             </PageLayout>
@@ -81,4 +105,4 @@ class LogInPage extends Component {
     };
 };
 
-export default LogInPage;
+export default withRouter(SignInPage);

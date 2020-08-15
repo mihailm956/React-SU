@@ -10,8 +10,8 @@ const getNavigation = (loggedIn, user) => {
             link: `/profile/${user && user.id}`
         },
         {
-            title: "Logout",
-            link: "/Logout"
+            title: "SignOut",
+            link: "/sign-out"
         }
     ]
 
@@ -25,12 +25,12 @@ const getNavigation = (loggedIn, user) => {
             link: "/issues"
         },
         {
-            title: "Log In",
-            link: "/login"
+            title: "Sign In",
+            link: "/sign-in"
         },
         {
-            title: "Register",
-            link: "/register"
+            title: "Sign Up",
+            link: "/sign-up"
         },
     ]
 

@@ -9,8 +9,8 @@ import HomePage from './pages/home/HomePage';
 import IssuesPage from './pages/Issue/all-issues/IssuesPage';
 import SingleIssuePage from './pages/Issue/single-issue/IssuePage';
 import NewIssuePage from './pages/Issue/new-issue/NewIssue';
-import RegisterPage from './pages/register/Register';
-import LogInPage from './pages/sign-in/SignIn';
+import SignUpPage from './pages/sign-up/SignUp';
+import SignInPage from './pages/sign-in/SignIn';
 
 class Navigation extends Component {
     state = {
@@ -31,8 +31,8 @@ class Navigation extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={HomePage} />
-                    <Route path="/login" component={LogInPage} />
-                    <Route path="/register" component={RegisterPage} />
+                    <Route path="/sign-up" component={SignUpPage} />
+                    <Route path="/sign-in" component={SignInPage} />
                     <Route path="/issues" exact component={IssuesPage} />
                     <Route path="/issues/new" exact component={NewIssuePage} />
                     <Route path="/issues/:id" component={SingleIssuePage} />

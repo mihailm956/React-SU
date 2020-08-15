@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import StyledButton from '../../components/ui/styledButton/StyledButton';
-import style from './register.module.css';
+import style from './sign-up.module.css';
 import PageLayout from '../../components/pageLayout/PageLayout';
 import Input from '../../components/ui/input/Input';
-import { register } from '../../utils/firebaseService';
+import { register } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
 
 
@@ -71,14 +71,17 @@ class RegisterPage extends Component {
         event.preventDefault();
 
         const fieldData = {
-            email:this.state.controls.email.value,
+            email: this.state.controls.email.value,
             password: this.state.controls.password.value,
             rePassword: this.state.controls.rePassword.value
         }
         console.log("[Register] [custom promise] [fieldData] ", fieldData)
 
         register(fieldData.email, fieldData.password, fieldData.rePassword)
-            .then(result => console.log("[Register] [custom promise] [result] " + result))
+        .then(result => {
+            console.log("[Register] [custom promise] [result] " + result)
+            this.props.history.push(`/`);
+        })
             .catch(err => console.log("[Register] [custom promise] [reject] " + err))
         // register
 
@@ -113,7 +116,7 @@ class RegisterPage extends Component {
                     <div className={style.Container}>
                         {form}
                         <br />
-                        <StyledButton title="Register" btnType="Success">REGISTER</StyledButton>
+                        <StyledButton title="Register" btnType="Success">SIGN UP</StyledButton>
                     </div>
                 </form>
             </PageLayout>
