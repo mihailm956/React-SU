@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useTable } from 'react-table'
 import { withRouter } from "react-router-dom";
 
-import makeData from './makeData'
+import makeData from '../../utils/dummyData'
 import PageLayout from '../../components/pageLayout/PageLayout';
 import style from './IssuesPage.module.css';
 import StyledButton from '../../components/ui/styledButton/StyledButton';
