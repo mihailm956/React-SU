@@ -135,27 +135,23 @@ textarea {
 }
 `
 
-
-
-
-class SubmitIssue extends Component {
-    render() {
-        return (
-            <div>
-                <Styles>
-                    <div className="testbox">
-                        <form action="/">
-                            <h1>Issue Report</h1>
-                            <br/>
-                            <p>Describe the Issue you have noticed / want ot report.</p>
-                            {/* <h4>Name</h4>
+const submitForm = (props) => {
+    return (
+        <div>
+            <Styles>
+                <div className="testbox">
+                    <form onSubmit={props.submitHandler}>
+                        <h1>Issue Report</h1>
+                        <br />
+                        <p>Describe the Issue you have noticed / want ot report.</p>
+                        {/* <h4>Name</h4>
                             <div className="name">
                                 <input type="text" name="name" placeholder="First" />
                                 <input type="text" name="name" placeholder="Last" />
                             </div> */}
-                            <h4>Issue Tittle</h4>
-                            <input type="text" name="name" />
-                            {/* <h4>Location You Visited<span>*</span></h4>
+                        <h4>Issue Tittle</h4>
+                        <input type="text" name="name" />
+                        {/* <h4>Location You Visited<span>*</span></h4>
                             <select>
                                 <option className="disabled" value="location" disabled selected>*Please Select*</option>
                                 <option value="1">Location 1</option>
@@ -164,22 +160,22 @@ class SubmitIssue extends Component {
                                 <option value="4">Location 4</option>
                                 <option value="5">Location 5</option>
                             </select> */}
-                            <h4>Due date<span>*</span></h4>
-                            <div className="day-visited">
-                                <input type="date" name="dayvisited" required />
-                                <i className="fas fa-calendar-alt"></i>
-                            </div>
-                            {/* <h4>Time Visited<span>*</span></h4>
+                        <h4>Due date</h4>
+                        <div className="day-visited">
+                            <input type="date" name="dueDate" />
+                            <i className="fas fa-calendar-alt"></i>
+                        </div>
+                        {/* <h4>Time Visited<span>*</span></h4>
                             <div className="time-visited">
                                 <input type="time" name="timevisited" required />
                                 <i className="fas fa-clock"></i>
                             </div> */}
-                            {/* <h4>Dine In / Take Out</h4>
+                        {/* <h4>Dine In / Take Out</h4>
                             <div className="question-answer">
                                 <label><input type="radio" value="none" name="Dine" /> Dine In</label>
                                 <label><input type="radio" value="none" name="Dine" /> Take Out</label>
                             </div> */}
-                            {/* <h4>Age<span>*</span></h4>
+                        {/* <h4>Age<span>*</span></h4>
                             <select>
                                 <option className="disabled" value="location" disabled selected>*Please Select*</option>
                                 <option value="under 13">Under 13</option>
@@ -190,9 +186,10 @@ class SubmitIssue extends Component {
                                 <option value="45-54">45-54</option>
                                 <option value="55 or older">55 or older</option>
                             </select> */}
-                            {/* <h4>Untitled</h4> */}
-                            <br/>
-                            <table>
+                        {/* <h4>Untitled</h4> */}
+                        <br />
+                        <table>
+                            <thead>
                                 <tr>
                                     <th className="Severity"></th>
                                     <th>Low</th>
@@ -200,16 +197,20 @@ class SubmitIssue extends Component {
                                     <th>High</th>
                                     <th>Breaking</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td className="Severity">Severity</td>
-                                    <td><input type="radio" value="none" name="Severity" /></td>
-                                    <td><input type="radio" value="none" name="Severity" /></td>
-                                    <td><input type="radio" value="none" name="Severity" /></td>
-                                    <td><input type="radio" value="none" name="Severity" /></td>
+                                    <td><input type="radio" value="Low" name="severity" /></td>
+                                    <td><input type="radio" value="Medium" name="severity" /></td>
+                                    <td><input type="radio" value="High" name="severity" /></td>
+                                    <td><input type="radio" value="Breaking" name="severity" /></td>
                                 </tr>
-                            </table>
-                            <br/>
-                            <table>
+                            </tbody>
+                        </table>
+                        <br />
+                        <table>
+                            <thead>
                                 <tr>
                                     <th className="Reproducible"></th>
                                     <th>Rerely</th>
@@ -217,25 +218,27 @@ class SubmitIssue extends Component {
                                     <th>Often</th>
                                     <th>Always</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td className="Reproducible">Reproducing</td>
-                                    <td><input type="radio" value="none" name="Reproducible" /></td>
-                                    <td><input type="radio" value="none" name="Reproducible" /></td>
-                                    <td><input type="radio" value="none" name="Reproducible" /></td>
-                                    <td><input type="radio" value="none" name="Reproducible" /></td>
+                                    <td><input type="radio" value="Rerely" name="reproducible" /></td>
+                                    <td><input type="radio" value="Sometimes" name="reproducible" /></td>
+                                    <td><input type="radio" value="Often" name="reproducible" /></td>
+                                    <td><input type="radio" value="Always" name="reproducible" /></td>
                                 </tr>
-                            </table>
-                            <h4>Description, comments, questions or suggestions</h4>
-                            <textarea rows="4"></textarea>
-                            <br/>
-                            <br/>
-                           <StyledButton>Submit</StyledButton>
-                        </form>
-                    </div>
-                </Styles>
-            </div>
-        )
-    }
+                            </tbody>
+                        </table>
+                        <h4>Description, comments, questions or suggestions</h4>
+                        <textarea rows="4" name="details"></textarea>
+                        <br />
+                        <br />
+                        <StyledButton>Submit</StyledButton>
+                    </form>
+                </div>
+            </Styles>
+        </div>
+    )
 }
 
-export default SubmitIssue;
+export default submitForm;
