@@ -7,7 +7,7 @@ export default function makeData() {
       "dueDate": "31-13-2000",
       "status": "In progress",
       "isItReproducible": 'always',
-      "bug": "asd",
+      "issue": "asd",
       "dbId": 111
     }, {
       "createdDate": "29-13-2005",
@@ -16,7 +16,7 @@ export default function makeData() {
       "dueDate": "31-13-2000",
       "status": "In progress",
       "isItReproducible": 'always',
-      "bug": "asd",
+      "issue": "asd",
       "dbId": 222
     }, {
       "createdDate": "29-13-2006",
@@ -25,7 +25,7 @@ export default function makeData() {
       "dueDate": "31-13-2000",
       "status": "In progress",
       "isItReproducible": 'always',
-      "bug": "asd",
+      "issue": "asd",
       "dbId": 333
     }, {
       "createdDate": "29-13-2007",
@@ -34,7 +34,7 @@ export default function makeData() {
       "dueDate": "31-13-2000",
       "status": "In progress",
       "isItReproducible": 'always',
-      "bug": "asd",
+      "issue": "asd",
       "dbId": 444
     }, {
       "createdDate": "29-13-2008",
@@ -43,7 +43,7 @@ export default function makeData() {
       "dueDate": "31-13-2000",
       "status": "In progress",
       "isItReproducible": 'always',
-      "bug": "asd",
+      "issue": "asd",
       "dbId": 555
     },
   ]

@@ -1,3 +1,5 @@
-.Container {
-    margin-top: 72px;
+.ButtonContainer {
+    float: right;
+    margin-right: 2vh;
+    margin-bottom: 2vh;
 }

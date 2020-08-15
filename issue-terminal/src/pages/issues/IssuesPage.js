@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import makeData from './makeData'
 import PageLayout from '../../components/pageLayout/PageLayout';
 import style from './IssuesPage.module.css';
+import StyledButton from '../../components/ui/styledButton/StyledButton';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -91,8 +92,8 @@ class App extends Component {
     state = {
         columns: [
             {
-                Header: 'BUG',
-                accessor: 'bug',
+                Header: 'Issue',
+                accessor: 'issue',
             },
             {
                 Header: 'CREATED',
@@ -131,11 +132,17 @@ class App extends Component {
         this.props.history.push(`/issues/${val.dbId}`);
     }
 
+    submitNewBugHandler = () => {
+        this.props.history.push(`/issues/new`);
+    }
 
     render() {
         return (
             <PageLayout>
                 <main className={style.Container}>
+                    <div className={style.ButtonContainer}>
+                        <StyledButton clicked={this.submitNewBugHandler} title="Register" btnType="Success">Submit New Issue</StyledButton>
+                    </div>
                     <Styles>
                         <Table columns={this.state.columns} data={this.state.data} onRowClick={this.selectRowHandler} />
                     </Styles>

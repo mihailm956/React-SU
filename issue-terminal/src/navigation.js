@@ -8,6 +8,7 @@ import {
 import HomePage from './pages/home/HomePage';
 import IssuesPage from './pages/issues/IssuesPage';
 import SingleIssuePage from './pages/singleIssue/IssuePage';
+import NewIssuePage from './pages/newIssue/NewIssue';
 import RegisterPage from './pages/register/Register';
 import LogInPage from './pages/login/LogIn';
 
@@ -30,10 +31,11 @@ class Navigation extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={HomePage} />
-                    <Route path="/issues" exact component={IssuesPage} />
-                    <Route path="/issues/:id" component={SingleIssuePage} />
-                    <Route path="/register" component={RegisterPage} />
                     <Route path="/login" component={LogInPage} />
+                    <Route path="/register" component={RegisterPage} />
+                    <Route path="/issues" exact component={IssuesPage} />
+                    <Route path="/issues/new" exact component={NewIssuePage} />
+                    <Route path="/issues/:id" component={SingleIssuePage} />
                 </Switch>
             </BrowserRouter>
         );
