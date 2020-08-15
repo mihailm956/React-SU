@@ -11,6 +11,7 @@ import SingleIssuePage from './pages/Issue/single-issue/IssuePage';
 import NewIssuePage from './pages/Issue/new-issue/NewIssue';
 import SignUpPage from './pages/sign-up/SignUp';
 import SignInPage from './pages/sign-in/SignIn';
+import SignOutPage from './pages/sign-out/SignOut';
 
 class Navigation extends Component {
     state = {
@@ -33,6 +34,7 @@ class Navigation extends Component {
                     <Route path="/" exact component={HomePage} />
                     <Route path="/sign-up" component={SignUpPage} />
                     <Route path="/sign-in" component={SignInPage} />
+                    <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
                     <Route path="/issues/new" exact component={NewIssuePage} />
                     <Route path="/issues/:id" component={SingleIssuePage} />

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import StyledButton from '../../components/ui/styledButton/StyledButton';
 import style from './sign-up.module.css';
+import StyledButton from '../../components/ui/styledButton/StyledButton';
+import Spinner from '../../components/ui/spinner/Spinner';
 import PageLayout from '../../components/pageLayout/PageLayout';
 import Input from '../../components/ui/input/Input';
-import { register } from '../../utils/authService';
+import { signUp } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
 
 
@@ -53,7 +54,8 @@ class RegisterPage extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        loading: false
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -70,21 +72,22 @@ class RegisterPage extends Component {
     submitHandle = (event) => {
         event.preventDefault();
 
+        this.setState({ loading: true })
+
         const fieldData = {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value,
             rePassword: this.state.controls.rePassword.value
         }
-        console.log("[Register] [custom promise] [fieldData] ", fieldData)
+        console.log("[SignUp] [custom promise] [fieldData] ", fieldData)
 
-        register(fieldData.email, fieldData.password, fieldData.rePassword)
-        .then(result => {
-            console.log("[Register] [custom promise] [result] " + result)
-            this.props.history.push(`/`);
-        })
-            .catch(err => console.log("[Register] [custom promise] [reject] " + err))
-        // register
-
+        signUp(fieldData.email, fieldData.password, fieldData.rePassword)
+            .finally(() => this.setState({ loading: false }))
+            .then(result => {
+                console.log("[SignUp] [custom promise] [result] " + result)
+                this.props.history.push(`/`);
+            })
+            .catch(err => console.log("[SignUp] [custom promise] [reject] " + err))
     }
 
     render() {
@@ -109,6 +112,9 @@ class RegisterPage extends Component {
             />
         ));
 
+        if (this.state.loading) {
+            form = <Spinner />
+        }
 
         return (
             <PageLayout>

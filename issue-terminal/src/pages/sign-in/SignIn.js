@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import style from './sign-in.module.css';
 import Input from '../../components/ui/input/Input';
 import StyledButton from '../../components/ui/styledButton/StyledButton';
+import Spinner from '../../components/ui/spinner/Spinner';
 import PageLayout from '../../components/pageLayout/PageLayout';
 import { signIn } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
@@ -39,7 +40,8 @@ class SignInPage extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        loading: false
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -61,12 +63,18 @@ class SignInPage extends Component {
             password: this.state.controls.password.value,
         }
 
+        this.setState({ loading: true });
+
         signIn(fieldData.email, fieldData.password)
+            .finally(() =>  this.setState({ loading: false }))
             .then(result => {
                 console.log("[Sign-In] [custom promise] [result] " + result)
                 this.props.history.push(`/`);
+               
             })
-            .catch(err => console.log("[Sign-In] [custom promise] [reject] " + err))
+            .catch((err) => {
+                console.log("[Sign-In] [custom promise] [reject] " + err)
+            })
     }
 
     render() {
@@ -90,6 +98,10 @@ class SignInPage extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
             />
         ));
+
+        if (this.state.loading) {
+            form = <Spinner />
+        }
 
         return (
             <PageLayout>

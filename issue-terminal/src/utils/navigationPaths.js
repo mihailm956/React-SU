@@ -6,6 +6,10 @@ const getNavigation = (loggedIn, user) => {
             link: "/"
         },
         {
+            title: "Issues",
+            link: "/issues"
+        },
+        {
             title: "Profile",
             link: `/profile/${user && user.id}`
         },
@@ -32,6 +36,14 @@ const getNavigation = (loggedIn, user) => {
             title: "Sign Up",
             link: "/sign-up"
         },
+        {
+            title: "Profile",
+            link: `/profile/${user && user.id}`
+        },
+        {
+            title: "SignOut",
+            link: "/sign-out"
+        }
     ]
 
     return loggedIn ? authLinks : guestLinks;

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const webAPIKey = 'AIzaSyBO6gFkoT2527y0reqgOFWwNfAALBtdnd8';
 const fbAuthUrls = {
-    register: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${webAPIKey}`,
+    signUp: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${webAPIKey}`,
     signIn: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${webAPIKey}`
 }
 
@@ -14,26 +14,16 @@ const firebaseAuth = (email, password, firebaseUrl) => {
             returnSecureToken: true
         }
 
-
-        // fetch(firebaseUrl, {
-        //     method: 'POST',
-        //     body: JSON.stringify(authData),
-        //     headers: {
-        //         'Content-Type': "application/json"
-        //     }
-        // })
-        //     .then((response) => {
-        //         return response.json()
-        //     })
         axios.post(firebaseUrl, authData)
-            .then((data) => {
+            .then((response) => {
                 console.log('[authService] [firebaseAuth] successful');
-                console.log(data);
-                console.log(data.idToken);
+                console.log(response.data);
+                console.log(response.data.idToken);
 
-                const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000);
-                localStorage.setItem('token', data.idToken);
-                localStorage.setItem('userId', data.localId);
+                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                localStorage.setItem('token', response.data.idToken);
+                localStorage.setItem('userId', response.data.localId);
+                localStorage.setItem('email', response.data.email);
                 localStorage.setItem('expirationDate', expirationDate);
 
                 resolve(true)
@@ -47,18 +37,23 @@ const firebaseAuth = (email, password, firebaseUrl) => {
     });
 }
 
-const register = (email, password, repassword) => {
+const signUp = (email, password, repassword) => {
     if (password !== repassword) {
         return new Promise((resolve, reject) => reject('passwords dont match'))
     }
     
-    return firebaseAuth(email, password, fbAuthUrls.register)
+    return firebaseAuth(email, password, fbAuthUrls.signUp)
 }
-
 
 const signIn = (email, password) => {
     return firebaseAuth(email, password, fbAuthUrls.signIn)
 }
+const signOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('expirationDate')
+    localStorage.removeItem('userId');
+    localStorage.removeItem('email');
+}
 
 
-export { register, signIn };
+export { signUp, signIn, signOut };
