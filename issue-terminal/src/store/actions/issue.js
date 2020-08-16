@@ -25,7 +25,7 @@ export const createIssueStart = () => {
 export const createIssue = (issueData, token) => {
     return dispatch => {
         dispatch(createIssueStart());
-        
+
         console.log(`[Register Issue] [store actions issue] [createIssue] issueData `, issueData);
 
         axios.post('/issues.json?auth=' + token, issueData)
@@ -48,7 +48,7 @@ export const createIssueInit = () => {
 
 export const fetchIssuesSuccess = (issues) => {
     return {
-        type: actionTypes.CREATE_ISSUE_SUCCESS,
+        type: actionTypes.FETCH_ISSUES_SUCCESS,
         issues: issues
     }
 }
@@ -66,12 +66,33 @@ export const fetchIssuesStart = () => {
     }
 }
 
-export const fetchOnlyUserIssues = (token, userId) => {
+// export const fetchOnlyUserIssues = (token, userId) => {
+//     return dispatch => {
+//         dispatch(fetchIssuesStart());
+//         const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"'
+//         axios.get('/issues.json' + queryParams)
+//             .then(res => {
+//                 const fetchedIssues = [];
+//                 for (const key in res.data) {
+//                     fetchedIssues.push({
+//                         ...res.data[key],
+//                         id: key
+//                     });
+//                 }
+//                 dispatch(fetchIssuesSuccess(fetchedIssues));
+//             })
+//             .catch(err => {
+//                 dispatch(fetchIssuesFail(err));
+//             })
+//     }
+// }
+
+export const fetchAllIssues = (token, userId) => {
     return dispatch => {
         dispatch(fetchIssuesStart());
-        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"'
-        axios.get('/issues.json' + queryParams)
+        axios.get('/issues.json')
             .then(res => {
+                console.log(`[store actions issue] [fetchAllIssues] res:`, res);
                 const fetchedIssues = [];
                 for (const key in res.data) {
                     fetchedIssues.push({
@@ -79,7 +100,26 @@ export const fetchOnlyUserIssues = (token, userId) => {
                         id: key
                     });
                 }
-                dispatch(fetchIssuesSuccess(fetchedIssues));
+                console.log(`[store actions issue] [fetchAllIssues] fetchedIssues:`, fetchedIssues);
+
+                const fetchedIssuesMapped = fetchedIssues.map(dataEntry => {
+                    return {
+                        "createdDate": dataEntry.issueCreated || '-',
+                        "severity": dataEntry.issueSeverity,
+                        "reporter": dataEntry.userEmail,
+                        "dueDate": dataEntry.issueDueDate || '-',
+                        "status": "submited",
+                        "isItReproducible": dataEntry.issueReproducible,
+                        "issue": dataEntry.issueName,
+                        "dbId": dataEntry.id
+                    }
+                });
+
+                console.log(`[store actions issue] [fetchAllIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
+
+
+
+                dispatch(fetchIssuesSuccess(fetchedIssuesMapped));
             })
             .catch(err => {
                 dispatch(fetchIssuesFail(err));

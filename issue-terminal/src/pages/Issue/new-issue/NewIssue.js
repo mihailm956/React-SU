@@ -22,6 +22,7 @@ class NewIssue extends Component {
 
         const issueData = {
             issueName: event.target.elements.name.value,
+            issueCreated: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
             issueDueDate: event.target.elements.dueDate.value,
             issueSeverity: event.target.elements.severity.value,
             issueReproducible: event.target.elements.reproducible.value,

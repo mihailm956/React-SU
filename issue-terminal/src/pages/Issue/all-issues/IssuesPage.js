@@ -7,8 +7,10 @@ import PageLayout from '../../../components/pageLayout/PageLayout';
 import StyledButton from '../../../components/ui/styledButton/StyledButton';
 import Table from '../../../components/ui/table/Table';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
-class App extends Component {
+class IssuesPage extends Component {
     state = {
         columns: [
             {
@@ -45,6 +47,7 @@ class App extends Component {
     }
 
 
+
     selectRowHandler = (rowIndex) => {
         const val = this.state.data[rowIndex]
         console.log('selectRowHandler: ', rowIndex);
@@ -57,18 +60,40 @@ class App extends Component {
         this.props.history.push(`/issues/new`);
     }
 
+    componentDidMount() {
+        this.props.fetchAllIssues(this.props.token, this.props.userId);
+    }
+
     render() {
+
+        console.log('-----------data ', this.state.data);
+        console.log('-----------this.props.issues ', this.props.issues);
+
         return (
             <PageLayout>
                 <main className={style.Container}>
                     <div className={style.ButtonContainer}>
                         <StyledButton clicked={this.submitNewBugHandler} title="Register" btnType="Success">Submit New Issue</StyledButton>
                     </div>
-                    <Table columns={this.state.columns} data={this.state.data} onRowClick={this.selectRowHandler} />
+                    <Table columns={this.state.columns} data={this.props.issues} onRowClick={this.selectRowHandler} />
                 </main>
             </PageLayout >
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        userId: state.auth.userId,
+        email: state.auth.userEmail,
+        issues: state.issue.issues
+    }
+}
 
-export default withRouter(App)
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAllIssues: (token, userId) => dispatch(actions.fetchAllIssues(token, userId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(IssuesPage));

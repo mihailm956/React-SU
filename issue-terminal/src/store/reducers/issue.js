@@ -24,6 +24,7 @@ const fetchIssuesStart = (state, action) => {
     return updateObject(state, { loading: true })
 }
 const fetchIssuesSuccess = (state, action) => {
+    console.log(`[store reducer issue]`, action.issues);
     return updateObject(state, {
         issues: action.issues,
         loading: false
