@@ -2,17 +2,19 @@ import axios from 'axios';
 
 import * as actionTypes from './actionsTypes';
 
+
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
     }
 }
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, email) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId: userId
+        userId: userId,
+        userEmail: email
     }
 }
 
@@ -27,6 +29,7 @@ export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userId');
+    localStorage.removeItem('email')
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -53,7 +56,7 @@ export const auth = (email, password, isSignUp) => {
         let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${webAPIKey}`;
 
         if (!isSignUp) {
-            url =  `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${webAPIKey}`
+            url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${webAPIKey}`
         }
 
         axios.post(url, authData)
@@ -64,7 +67,10 @@ export const auth = (email, password, isSignUp) => {
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate)
                 localStorage.setItem('userId', response.data.localId)
-                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                localStorage.setItem('email', email)
+                console.log('!!!! CHECK IF VALID !!!!!  response.data.email', email)
+                console.log('!!!! CHECK IF VALID !!!!!  response.data.email', response.data.email)
+                dispatch(authSuccess(response.data.idToken, response.data.localId, email));
                 dispatch(checkAuthTimeout(response.data.expiresIn))
             })
             .catch(err => {
@@ -95,7 +101,8 @@ export const authCheckState = () => {
             else {
                 console.log('[store] [actions] [authCheckState] successful auto sign in');
                 const userId = localStorage.getItem('userId');
-                dispatch(authSuccess(token, userId))
+                const email = localStorage.getItem('email');
+                dispatch(authSuccess(token, userId, email))
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000))
             }
         }

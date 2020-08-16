@@ -53,6 +53,7 @@ class App extends Component {
     }
 
     submitNewBugHandler = () => {
+        console.log('submit new issue');
         this.props.history.push(`/issues/new`);
     }
 

@@ -7,7 +7,8 @@ import getNavigation from '../../utils/navigationPaths';
 
 class NavigationItems extends Component {
     render() {
-        let reacablePaths = getNavigation(true);
+        let reacablePaths = getNavigation(this.props.isAuthenticated);
+
         let linksToNavigate = reacablePaths.map((navElement) => {
             return (
                 <NavigationItem link={navElement.link} key={navElement.title}>
