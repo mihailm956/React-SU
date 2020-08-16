@@ -10,6 +10,9 @@ import { signUp } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 class RegisterPage extends Component {
     state = {
@@ -82,14 +85,19 @@ class RegisterPage extends Component {
             rePassword: this.state.controls.rePassword.value
         }
         console.log("[SignUp] [custom promise] [fieldData] ", fieldData)
+        this.props.onAuth(fieldData.email, fieldData.password, true)
+        // signUp(fieldData.email, fieldData.password, fieldData.rePassword)
+        //     .finally(() => this.setState({ loading: false }))
+        //     .then(result => {
+        //         console.log("[SignUp] [custom promise] [result] " + result)
+        //         this.props.history.push(`/`);
+        //     })
+        //     .catch(err => console.log("[SignUp] [custom promise] [reject] " + err))
+    }
 
-        signUp(fieldData.email, fieldData.password, fieldData.rePassword)
-            .finally(() => this.setState({ loading: false }))
-            .then(result => {
-                console.log("[SignUp] [custom promise] [result] " + result)
-                this.props.history.push(`/`);
-            })
-            .catch(err => console.log("[SignUp] [custom promise] [reject] " + err))
+
+    componentDidMount() {
+        this.props.onSetAuthRedirectPath();
     }
 
     render() {
@@ -118,8 +126,14 @@ class RegisterPage extends Component {
             form = <Spinner />
         }
 
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }
+
         return (
             <PageLayout>
+                {authRedirect}
                 <form onSubmit={this.submitHandle} className={style.container}>
                     <div className={style.Container}>
                         {form}
@@ -132,4 +146,18 @@ class RegisterPage extends Component {
     };
 };
 
-export default withErrorHandler(RegisterPage, axios);
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+        authRedirectPath: state.auth.authRedirectPath
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(RegisterPage, axios));

@@ -13,7 +13,8 @@ const Header = (props) => {
                 <Logo />
             </div>
             <nav className={style.DesktopOnly}>
-                <NavigationItems isAuthenticated={props.isAuth} />
+                {/* <NavigationItems isAuthenticated={props.isAuth} /> */}
+                <NavigationItems />
             </nav>
         </header>
     );

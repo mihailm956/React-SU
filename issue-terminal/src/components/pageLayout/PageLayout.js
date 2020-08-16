@@ -4,6 +4,7 @@ import Header from '../../components/navigation/header/Header';
 import SideDrawer from '../navigation/sideDrawer/SideDrawer';
 import style from './page-layout.module.css';
 
+
 class PageLayout extends Component {
     state = {
         showSideDrawer: false
@@ -21,11 +22,9 @@ class PageLayout extends Component {
         return (
             <div>
                 <Header
-                    isAuth={this.props.isAuthenticated}
                     drawerToggleClicked={this.sideDrawerToggleHandler}
                 />
                 <SideDrawer
-                    isAuth={this.props.isAuthenticated}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler}
                 />
@@ -37,4 +36,6 @@ class PageLayout extends Component {
     }
 }
 
-export default PageLayout;
+
+
+export default (PageLayout);

@@ -10,6 +10,10 @@ import { signIn } from '../../utils/authService';
 import { updateObject, checkValidity } from '../../utils/utility';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+
 class SignInPage extends Component {
     state = {
         controls: {
@@ -66,16 +70,22 @@ class SignInPage extends Component {
 
         this.setState({ loading: true });
 
-        signIn(fieldData.email, fieldData.password)
-            .finally(() => this.setState({ loading: false }))
-            .then(result => {
-                console.log("[Sign-In] [custom promise] [result] " + result)
-                this.props.history.push(`/`);
+        this.props.onAuth(fieldData.email, fieldData.password, false)
 
-            })
-            .catch((err) => {
-                console.log("[Sign-In] [custom promise] [reject] " + err)
-            })
+        // signIn(fieldData.email, fieldData.password)
+        //     .finally(() => this.setState({ loading: false }))
+        //     .then(result => {
+        //         console.log("[Sign-In] [custom promise] [result] " + result)
+        //         this.props.history.push(`/`);
+
+        //     })
+        //     .catch((err) => {
+        //         console.log("[Sign-In] [custom promise] [reject] " + err)
+        //     })
+    }
+
+    componentDidMount() {
+        this.props.onSetAuthRedirectPath();
     }
 
     render() {
@@ -104,8 +114,14 @@ class SignInPage extends Component {
             form = <Spinner />
         }
 
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        }
+
         return (
             <PageLayout>
+                {authRedirect}
                 <form onSubmit={this.submitHandle} className={style.container}>
                     <div className={style.Container}>
                         {form}
@@ -118,4 +134,19 @@ class SignInPage extends Component {
     };
 };
 
-export default withErrorHandler(SignInPage, axios);
+
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+        authRedirectPath: state.auth.authRedirectPath
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(SignInPage, axios));

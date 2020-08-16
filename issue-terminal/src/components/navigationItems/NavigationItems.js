@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import classes from './navigation-items.module.css';
+import style from './navigation-items.module.css';
 import NavigationItem from '../navigationItem/NavigationItem'
 import getNavigation from '../../utils/navigationPaths';
 
-const navigationItems = (props) => {
-    const links = getNavigation(props.isAuthenticated);
+class NavigationItems extends Component {
+    render() {
+        let reacablePaths = getNavigation(true);
+        let linksToNavigate = reacablePaths.map((navElement) => {
+            return (
+                <NavigationItem link={navElement.link} key={navElement.title}>
+                    {navElement.title}
+                </NavigationItem>
+            )
+        })
 
-    return (
-        <ul className={classes.NavigationItems}>
-            {
-                links.map((navElement) => {
-                    return (
-                        <NavigationItem link={navElement.link} key={navElement.title}>
-                            {navElement.title}
-                        </NavigationItem>
-                    )
-                })
-            }
-        </ul>
-    )
-};
+        return (
+            <ul className={style.NavigationItems}>
+                {linksToNavigate}
+            </ul>
+        )
+    }
+}
 
-export default navigationItems;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
+
+export default connect(mapStateToProps)(NavigationItems);

@@ -14,21 +14,15 @@ import SignUpPage from './pages/sign-up/SignUp';
 import SignInPage from './pages/sign-in/SignIn';
 import SignOutPage from './pages/sign-out/SignOut';
 
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
+
 class Navigation extends Component {
-    state = {
-        showSideDrawer: false
-    }
-
-    sideDrawerClosedHandler = () => {
-        this.setState({ showSideDrawer: false });
-    }
-
-    sideDrawerToggleHandler = () => {
-        this.setState({ showSideDrawer: !this.state.showSideDrawer });
+    componentDidMount() {
+        this.props.onTryAutoSignup();
     }
 
     render() {
-        console.log('[navigation] this.props.signedIn = ' + this.props.signedIn);
         return (
             <BrowserRouter>
                 <Switch>
@@ -38,10 +32,10 @@ class Navigation extends Component {
                     <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
                     <Route path="/issues/new" exact >
-                        {this.props.signedIn ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
+                        { this.props.isAuthenticated ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
                     <Route path="/issues/:id" component={SingleIssuePage} >
-                        {this.props.signedIn ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
+                        { this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
                 </Switch>
             </BrowserRouter>
@@ -49,5 +43,17 @@ class Navigation extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
 
-export default Navigation;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onTryAutoSignup: () => dispatch(actions.authCheckState())
+    }
+};
+
+
+export default (connect(mapStateToProps, mapDispatchToProps)(Navigation));
