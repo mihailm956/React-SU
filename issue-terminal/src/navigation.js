@@ -13,6 +13,7 @@ import NewIssuePage from './pages/Issue/new-issue/NewIssue';
 import SignUpPage from './pages/sign-up/SignUp';
 import SignInPage from './pages/sign-in/SignIn';
 import SignOutPage from './pages/sign-out/SignOut';
+import ErrorPage from './pages/error/ErrorPage';
 
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
@@ -32,11 +33,12 @@ class Navigation extends Component {
                     <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
                     <Route path="/issues/new" exact >
-                        { this.props.isAuthenticated ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
+                        {this.props.isAuthenticated ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
                     <Route path="/issues/:id" component={SingleIssuePage} >
-                        { this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
+                        {this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
+                    <Route component={ErrorPage} />
                 </Switch>
             </BrowserRouter>
         );

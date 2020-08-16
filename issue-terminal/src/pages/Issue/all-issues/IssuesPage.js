@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 
 import style from './issues-page.module.css';
-import makeData from '../../../utils/dummyData'
 import PageLayout from '../../../components/pageLayout/PageLayout';
 import StyledButton from '../../../components/ui/styledButton/StyledButton';
 import Table from '../../../components/ui/table/Table';
@@ -42,22 +41,23 @@ class IssuesPage extends Component {
                 Header: 'IS IT REPRODUCIBLE',
                 accessor: 'isItReproducible',
             }
-        ],
-        data: makeData(20)
+        ]
     }
 
-
-
     selectRowHandler = (rowIndex) => {
-        const val = this.state.data[rowIndex]
+        const val = this.props.issues[rowIndex]
         console.log('selectRowHandler: ', rowIndex);
         console.log('selectRowHandler: ', val.dbId);
-        this.props.history.push(`/issues/${val.dbId}`);
+        if (this.props.isAuthenticated) {
+            this.props.history.push(`/issues/${val.dbId}`);
+        }
     }
 
     submitNewBugHandler = () => {
         console.log('submit new issue');
-        this.props.history.push(`/issues/new`);
+        if (this.props.isAuthenticated) {
+            this.props.history.push(`/issues/new`);
+        }
     }
 
     componentDidMount() {
@@ -65,8 +65,6 @@ class IssuesPage extends Component {
     }
 
     render() {
-
-        console.log('-----------data ', this.state.data);
         console.log('-----------this.props.issues ', this.props.issues);
 
         return (
@@ -83,6 +81,7 @@ class IssuesPage extends Component {
 }
 const mapStateToProps = state => {
     return {
+        isAuthenticated: state.auth.token !== null,
         token: state.auth.token,
         userId: state.auth.userId,
         email: state.auth.userEmail,

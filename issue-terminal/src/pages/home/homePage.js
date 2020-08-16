@@ -7,9 +7,7 @@ class homePage extends Component {
     render() {
         return (
             <PageLayout>
-                <main className={style.Container}>
-                    Home Page
-                </main>
+                <div>Home Page</div>
             </PageLayout>
         )
     }
