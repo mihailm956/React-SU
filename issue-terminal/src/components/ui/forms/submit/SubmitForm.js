@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 
 import StyledButton from '../../styledButton/StyledButton';
@@ -134,14 +134,37 @@ textarea {
    }
 }
 `
-
 const submitForm = (props) => {
-    return (
-        <div>
+    console.log(`[SubmitForm.js] [submitForm] props.options`, props.options);
+    console.log(`[SubmitForm.js] [submitForm] props.options.length`, props.options.length);
+    console.log(`[SubmitForm.js] [submitForm]`, Array.isArray(props.options));
+
+
+    let form = (<div>You dont have permission to any project</div>)
+
+    if (props.options && props.options.length > 0) {
+        let availableOptions = (
+            <select name="selectedProject" defaultValue={'DEFAULT'}>
+                <option value="DEFAULT" hidden disabled>Choose a project</option>
+                {
+                    props.options.map((x, y) => {
+                        return (
+                            <option key={y} value={x}>{x}</option>
+                        )
+                    })
+                }
+            </select>
+        )
+
+        form = (
             <Styles>
                 <div className="testbox">
                     <form onSubmit={props.submitHandler}>
                         <h1>Issue Report</h1>
+                        <br />
+                        <h4>Select project <span>*</span></h4>
+                        {availableOptions}
+                        <br />
                         <br />
                         <p>Describe the Issue you have noticed / want ot report.</p>
                         {/* <h4>Name</h4>
@@ -151,15 +174,6 @@ const submitForm = (props) => {
                             </div> */}
                         <h4>Issue Tittle</h4>
                         <input type="text" name="name" />
-                        {/* <h4>Location You Visited<span>*</span></h4>
-                            <select>
-                                <option className="disabled" value="location" disabled selected>*Please Select*</option>
-                                <option value="1">Location 1</option>
-                                <option value="2">Location 2</option>
-                                <option value="3">Location 3</option>
-                                <option value="4">Location 4</option>
-                                <option value="5">Location 5</option>
-                            </select> */}
                         <h4>Due date</h4>
                         <div className="day-visited">
                             <input type="date" name="dueDate" />
@@ -175,17 +189,17 @@ const submitForm = (props) => {
                                 <label><input type="radio" value="none" name="Dine" /> Dine In</label>
                                 <label><input type="radio" value="none" name="Dine" /> Take Out</label>
                             </div> */}
-                        {/* <h4>Age<span>*</span></h4>
-                            <select>
-                                <option className="disabled" value="location" disabled selected>*Please Select*</option>
-                                <option value="under 13">Under 13</option>
-                                <option value="13-17">13-17</option>
-                                <option value="18-24">18-24</option>
-                                <option value="25-34">25-34</option>
-                                <option value="35-44">35-44</option>
-                                <option value="45-54">45-54</option>
-                                <option value="55 or older">55 or older</option>
-                            </select> */}
+                        <h4>Age<span>*</span></h4>
+                        <select defaultValue={'DEFAULT'}>
+                            <option value="DEFAULT" disabled>Choose a salutation ...</option>
+                            <option value="under 13">Under 13</option>
+                            <option value="13-17">13-17</option>
+                            <option value="18-24">18-24</option>
+                            <option value="25-34">25-34</option>
+                            <option value="35-44">35-44</option>
+                            <option value="45-54">45-54</option>
+                            <option value="55 or older">55 or older</option>
+                        </select>
                         {/* <h4>Untitled</h4> */}
                         <br />
                         <table>
@@ -237,8 +251,14 @@ const submitForm = (props) => {
                     </form>
                 </div>
             </Styles>
+        )
+    }
+    return (
+        <div>
+            {form}
         </div>
     )
 }
+
 
 export default submitForm;

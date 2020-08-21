@@ -1,5 +1,5 @@
 .ButtonContainer {
-    float: right;
+    display: block;
     margin-right: 2vh;
     margin-bottom: 2vh;
 }

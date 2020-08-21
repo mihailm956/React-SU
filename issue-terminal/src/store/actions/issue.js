@@ -104,6 +104,7 @@ export const fetchAllIssues = (token, userId) => {
 
                 const fetchedIssuesMapped = fetchedIssues.map(dataEntry => {
                     return {
+                        "project": dataEntry.issueProject || '-',
                         "createdDate": dataEntry.issueCreated || '-',
                         "severity": dataEntry.issueSeverity,
                         "reporter": dataEntry.userEmail,

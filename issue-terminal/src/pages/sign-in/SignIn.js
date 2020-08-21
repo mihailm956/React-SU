@@ -46,7 +46,6 @@ class SignInPage extends Component {
                 touched: false
             }
         },
-        loading: false
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -68,20 +67,7 @@ class SignInPage extends Component {
             password: this.state.controls.password.value,
         }
 
-        this.setState({ loading: true });
-
         this.props.onAuth(fieldData.email, fieldData.password, false)
-
-        // signIn(fieldData.email, fieldData.password)
-        //     .finally(() => this.setState({ loading: false }))
-        //     .then(result => {
-        //         console.log("[Sign-In] [custom promise] [result] " + result)
-        //         this.props.history.push(`/`);
-
-        //     })
-        //     .catch((err) => {
-        //         console.log("[Sign-In] [custom promise] [reject] " + err)
-        //     })
     }
 
     componentDidMount() {
@@ -110,7 +96,7 @@ class SignInPage extends Component {
             />
         ));
 
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />
         }
 
@@ -138,6 +124,7 @@ class SignInPage extends Component {
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.auth.token !== null,
+        loading: state.auth.loading,
         authRedirectPath: state.auth.authRedirectPath
     }
 };

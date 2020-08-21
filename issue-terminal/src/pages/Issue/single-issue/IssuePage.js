@@ -32,6 +32,7 @@ class IssuePage extends Component {
                 console.log(`[IssuePage componentDidMount] axios success access to selected issue data`, res.data);
                 this.setState({
                     issueData: {
+                        project: res.data.issueProject,
                         createdDate: res.data.issueCreated,
                         issueDetails: res.data.issueDetails,
                         severity: res.data.issueSeverity,

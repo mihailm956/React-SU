@@ -70,12 +70,46 @@ export const auth = (email, password, isSignUp) => {
                 localStorage.setItem('email', email)
                 console.log('!!!! CHECK IF VALID !!!!!  response.data.email', email)
                 console.log('!!!! CHECK IF VALID !!!!!  response.data.email', response.data.email)
-                dispatch(authSuccess(response.data.idToken, response.data.localId, email));
-                dispatch(checkAuthTimeout(response.data.expiresIn))
+
+                if (isSignUp) {
+                    saveUserDataInDB(response.data.localId, email)
+                        .then(() => {
+                            console.log(`[store actiob auth] AFTER successful stored user id in db`);
+                            dispatch(authSuccess(response.data.idToken, response.data.localId, email));
+                            dispatch(checkAuthTimeout(response.data.expiresIn))
+                        })
+                        .catch(err => dispatch(authFail(err)))
+                }
+                else {
+                    dispatch(authSuccess(response.data.idToken, response.data.localId, email));
+                    dispatch(checkAuthTimeout(response.data.expiresIn));
+                }
             })
             .catch(err => {
-                dispatch(authFail(err.response.data.error))
+                dispatch(authFail(err))
             })
+    }
+}
+
+const saveUserDataInDB = (id, email) => {
+    return new Promise((resolve, reject) => {
+        let url = 'https://reactworkshop-663c6.firebaseio.com/accounts.json';
+        let data = { userId: id, email, projectAccess: [] }
+
+        axios.post(url, data)
+            .then(result => {
+                console.log(`[store actiob saveUserIdInDB] successful stored user id in db`);
+                resolve();
+            })
+            .catch(err => reject(err))
+    })
+}
+
+const continueWithAuthSuccess = (response, email) => {
+    return dispatch => {
+
+        dispatch(authSuccess(response.data.idToken, response.data.localId, email));
+        dispatch(checkAuthTimeout(response.data.expiresIn))
     }
 }
 

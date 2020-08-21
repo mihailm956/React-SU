@@ -59,8 +59,7 @@ class RegisterPage extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        loading: false
+        }
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -76,8 +75,6 @@ class RegisterPage extends Component {
 
     submitHandle = (event) => {
         event.preventDefault();
-
-        this.setState({ loading: true })
 
         const fieldData = {
             email: this.state.controls.email.value,
@@ -122,7 +119,7 @@ class RegisterPage extends Component {
             />
         ));
 
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />
         }
 
@@ -149,6 +146,7 @@ class RegisterPage extends Component {
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.auth.token !== null,
+        loading: state.auth.loading,
         authRedirectPath: state.auth.authRedirectPath
     }
 };

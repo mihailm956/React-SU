@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import style from './issues-page.module.css';
 import PageLayout from '../../../components/pageLayout/PageLayout';
 import StyledButton from '../../../components/ui/styledButton/StyledButton';
+import Spinner from '../../../components/ui/spinner/Spinner';
 import Table from '../../../components/ui/table/Table';
 
 import { connect } from 'react-redux';
@@ -15,6 +16,10 @@ class IssuesPage extends Component {
             {
                 Header: 'Issue',
                 accessor: 'issue',
+            },
+            {
+                Header: 'Project',
+                accessor: 'project',
             },
             {
                 Header: 'CREATED',
@@ -66,14 +71,18 @@ class IssuesPage extends Component {
 
     render() {
         console.log('-----------this.props.issues ', this.props.issues);
+        let table = <Spinner />
 
+        if (!this.props.loading) {
+            table = <Table columns={this.state.columns} data={this.props.issues} onRowClick={this.selectRowHandler} />
+        }
         return (
             <PageLayout>
                 <main className={style.Container}>
                     <div className={style.ButtonContainer}>
                         <StyledButton clicked={this.submitNewBugHandler} title="Register" btnType="Success">Submit New Issue</StyledButton>
                     </div>
-                    <Table columns={this.state.columns} data={this.props.issues} onRowClick={this.selectRowHandler} />
+                    {table}
                 </main>
             </PageLayout >
         )
@@ -85,7 +94,8 @@ const mapStateToProps = state => {
         token: state.auth.token,
         userId: state.auth.userId,
         email: state.auth.userEmail,
-        issues: state.issue.issues
+        issues: state.issue.issues,
+        loading: state.issue.loading
     }
 }
 
