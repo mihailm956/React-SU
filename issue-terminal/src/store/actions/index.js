@@ -8,5 +8,5 @@ export {
 export {
     createIssueInit,
     createIssue,
-    fetchAllIssues,
+    fetchAllAuthorizedIssues,
 } from './issue';

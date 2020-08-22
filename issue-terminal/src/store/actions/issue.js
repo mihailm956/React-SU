@@ -87,12 +87,32 @@ export const fetchIssuesStart = () => {
 //     }
 // }
 
-export const fetchAllIssues = (token, userId) => {
+export const fetchAllAuthorizedIssues = (token, userId) => {
     return dispatch => {
         dispatch(fetchIssuesStart());
-        axios.get('/issues.json')
+        axios.get('/projects.json')
             .then(res => {
-                console.log(`[store actions issue] [fetchAllIssues] res:`, res);
+                let issues = [];
+
+                console.log(`[store action issue] [fetchAllAuthorizedIssues]  res.data`,  res.data);
+                for (const projectName in res.data) {
+                    if (res.data.hasOwnProperty(projectName)) {
+                        const projectData = res.data[projectName];
+
+                        if (projectData['access'] && projectData['access'][userId]) {
+                            console.log(`[store action issue] [fetchAllAuthorizedIssues] ${projectName} accesssable`);
+                            issues.concat(res.data[projectName]['issues']);
+                        }
+                        else {
+                            console.log(`[store action issue] [fetchAllAuthorizedIssues] ${projectName} unauthorized`);
+                        }
+                    }
+                }
+
+
+
+
+                console.log(`[store actions issue] [fetchAllAuthorizedIssues] res:`, res);
                 const fetchedIssues = [];
                 for (const key in res.data) {
                     fetchedIssues.push({
@@ -100,7 +120,7 @@ export const fetchAllIssues = (token, userId) => {
                         id: key
                     });
                 }
-                console.log(`[store actions issue] [fetchAllIssues] fetchedIssues:`, fetchedIssues);
+                console.log(`[store actions issue] [fetchAllAuthorizedIssues] fetchedIssues:`, fetchedIssues);
 
                 const fetchedIssuesMapped = fetchedIssues.map(dataEntry => {
                     return {
@@ -116,7 +136,7 @@ export const fetchAllIssues = (token, userId) => {
                     }
                 });
 
-                console.log(`[store actions issue] [fetchAllIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
+                console.log(`[store actions issue] [fetchAllAuthorizedIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
 
 
 

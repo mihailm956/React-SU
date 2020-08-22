@@ -66,7 +66,7 @@ class IssuesPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllIssues(this.props.token, this.props.userId);
+        this.props.fetchAllAuthorizedIssues(this.props.token, this.props.userId);
     }
 
     render() {
@@ -100,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllIssues: (token, userId) => dispatch(actions.fetchAllIssues(token, userId))
+        fetchAllAuthorizedIssues: (token, userId) => dispatch(actions.fetchAllAuthorizedIssues(token, userId))
     }
 }
 
