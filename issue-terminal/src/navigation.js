@@ -6,7 +6,7 @@ import {
     Redirect
 } from 'react-router-dom';
 
-import HomePage from './pages/home/HomePage';
+import HomePage from './pages/home/homePage';
 import IssuesPage from './pages/Issue/all-issues/IssuesPage';
 import SingleIssuePage from './pages/Issue/single-issue/IssuePage';
 import NewIssuePage from './pages/Issue/new-issue/NewIssue';
@@ -32,9 +32,7 @@ class Navigation extends Component {
                     <Route path="/sign-in" component={SignInPage} />
                     <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
-                    <Route path="/issues/new" exact >
-                        {this.props.isAuthenticated ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
-                    </Route>
+                    <Route path="/issues/new" exact component={NewIssuePage} />
                     <Route path="/issues/:id" component={SingleIssuePage} >
                         {this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from '../../components/navigation/header/Header';
 import SideDrawer from '../navigation/sideDrawer/SideDrawer';
 import style from './page-layout.module.css';
+import { requirePropFactory } from '@material-ui/core';
 
 
 class PageLayout extends Component {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-
 import PageLayout from '../../../components/pageLayout/PageLayout';
 import SubmitForm from '../../../components/ui/forms/submit/SubmitForm';
 import Spinner from '../../../components/ui/spinner/Spinner';
-
+import { toast } from 'react-toastify';
 import * as actions from '../../../store/actions/index';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 class NewIssue extends Component {
     state = {
@@ -59,6 +60,7 @@ class NewIssue extends Component {
         console.log('details', event.target.elements.details.value);
         console.log('userEmail', this.props.email);
         console.log('userId', this.props.userId);
+        let validForm = true;
 
         const issueData = {
             issueProject: event.target.elements.selectedProject.value,
@@ -72,8 +74,39 @@ class NewIssue extends Component {
             userId: this.props.userId
         }
 
+        if(issueData.issueProject === 'DEFAULT' || !issueData.issueProject){
+            toast.error("ERROR: Could not save data, Select your Project...", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if(!issueData.issueName){
+            toast.error("ERROR: Could not save data, Submit Issue Title...", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if(!issueData.issueDueDate){
+            toast.error("ERROR: Could not save data, Make sure that you have a valid Due Date...", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if(!issueData.issueSeverity){
+            toast.error("ERROR: Could not save data, Choose severity of the issue.", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if(!issueData.issueReproducible){
+            toast.error("ERROR: Could not save data, Issue Reproducibility was not selected", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if(!issueData.issueDetails){
+            toast.error("ERROR: Could not save data, Description filed is mandatory..", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        }
+        
+
         console.log(`[Register Issue] [NewIssue] [formDataHandler]`);
-        this.props.onCreateIssue(issueData, this.props.token);
+        if(validForm){
+            this.props.onCreateIssue(issueData, this.props.token);
+             toast.success("Congratulations you create New Issuee...", {
+                position: toast.POSITION.TOP_RIGHT });
+        }
     }
 
 
@@ -94,7 +127,6 @@ class NewIssue extends Component {
         )
     }
 }
-
 
 const mapStateToProps = state => {
     return {

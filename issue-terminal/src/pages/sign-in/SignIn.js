@@ -13,6 +13,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class SignInPage extends Component {
     state = {
@@ -61,13 +63,28 @@ class SignInPage extends Component {
 
     submitHandle = async (event) => {
         event.preventDefault();
-
+        let validForm = true;
         const fieldData = {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value,
         }
-
-        this.props.onAuth(fieldData.email, fieldData.password, false)
+        
+        if(!fieldData.email){
+            toast.error("ERROR: Enter your email address", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        }
+        if(!fieldData.password){
+            toast.error("ERROR: Enter your password", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        }
+        if(validForm){
+            this.props.onAuth(fieldData.email, fieldData.password, false)
+            toast.success("Succesfully logged in", {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
     }
 
     componentDidMount() {

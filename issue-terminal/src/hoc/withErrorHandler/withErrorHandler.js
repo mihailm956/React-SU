@@ -1,6 +1,8 @@
 import React, { Fragment, Component } from 'react';
+import { toast } from 'react-toastify';
 
 import Modal from '../../components/ui/modal/Modal'
+import 'react-toastify/dist/ReactToastify.css';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
@@ -24,6 +26,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         errorConfirmedHandler = () => {
             this.setState({ error: null })
+             toast.error("ERROR: Something bad happened", {
+                position: toast.POSITION.TOP_RIGHT });
         }
 
         componentWillUnmount() {

@@ -13,6 +13,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 class RegisterPage extends Component {
     state = {
@@ -75,14 +77,34 @@ class RegisterPage extends Component {
 
     submitHandle = (event) => {
         event.preventDefault();
-
+        let validForm = true;
         const fieldData = {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value,
             rePassword: this.state.controls.rePassword.value
         }
+
+        if(!fieldData.email){
+            toast.error("ERROR: Email address is mandatory", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if (!fieldData.password){
+             toast.error("ERROR: Password is mandatory", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        } else if (!fieldData.rePassword) {
+            toast.error("ERROR: Re-enter your password", {
+                position: toast.POSITION.TOP_RIGHT });
+            validForm = false;
+        }
+
+
         console.log("[SignUp] [custom promise] [fieldData] ", fieldData)
-        this.props.onAuth(fieldData.email, fieldData.password, true)
+        if (validForm){
+            toast.success("Congratulations you have just Signed up!", {
+                position: toast.POSITION.TOP_RIGHT });
+            this.props.onAuth(fieldData.email, fieldData.password, true)
+        }
         // signUp(fieldData.email, fieldData.password, fieldData.rePassword)
         //     .finally(() => this.setState({ loading: false }))
         //     .then(result => {

@@ -142,17 +142,12 @@ const submitForm = (props) => {
 
     let form = (<div>You dont have permission to any project</div>)
 
-    if (props.options && props.options.length > 0) {
+    if (true) {
         let availableOptions = (
             <select name="selectedProject" defaultValue={'DEFAULT'}>
                 <option value="DEFAULT" hidden disabled>Choose a project</option>
-                {
-                    props.options.map((x, y) => {
-                        return (
-                            <option key={y} value={x}>{x}</option>
-                        )
-                    })
-                }
+                            <option  value="x">x</option>
+                
             </select>
         )
 

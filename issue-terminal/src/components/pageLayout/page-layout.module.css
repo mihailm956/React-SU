@@ -4,11 +4,13 @@
     margin: 0;
     padding: 0;
     font-family: 'Indie- Flower', cursive;
+    background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
 }
 
 .app {
     max-width: 100%;
     margin: 0 auto;
+    background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
 }
 
 .container {
@@ -16,6 +18,11 @@
     padding: 0.5%;
     /* border: 1px solid purple; */
     margin-bottom: 0.1%;
+    background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
+}
+
+html {
+    background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
 }
 
 .inner-container {
@@ -24,4 +31,9 @@
     height: auto;
     /* border:1px solid blue; */
     margin-bottom: 5%;
+    background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
+}
+
+body {
+ background-image: url("/React-SU/issue-terminal/src/assets/images/background.jpg");
 }
