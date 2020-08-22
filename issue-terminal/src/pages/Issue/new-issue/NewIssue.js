@@ -55,7 +55,7 @@ class NewIssue extends Component {
         console.log('formData', formData);
         console.log('selectedProject', event.target.elements.selectedProject.value);
         console.log('name', event.target.elements.name.value);
-        console.log('name', event.target.elements.dueDate.value);
+        console.log('dueDate', event.target.elements.dueDate.value);
         console.log('severity', event.target.elements.severity.value);
         console.log('reproducible', event.target.elements.reproducible.value);
         console.log('details', event.target.elements.details.value);

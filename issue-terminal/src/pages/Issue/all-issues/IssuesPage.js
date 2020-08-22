@@ -66,6 +66,7 @@ class IssuesPage extends Component {
     }
 
     componentDidMount() {
+        console.log(`--[all-issues] [componentDidMount] his.props.userId `, this.props.userId);
         this.props.fetchAllAuthorizedIssues(this.props.token, this.props.userId);
     }
 

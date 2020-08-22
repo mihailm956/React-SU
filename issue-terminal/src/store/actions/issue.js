@@ -66,27 +66,6 @@ export const fetchIssuesStart = () => {
     }
 }
 
-// export const fetchOnlyUserIssues = (token, userId) => {
-//     return dispatch => {
-//         dispatch(fetchIssuesStart());
-//         const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"'
-//         axios.get('/issues.json' + queryParams)
-//             .then(res => {
-//                 const fetchedIssues = [];
-//                 for (const key in res.data) {
-//                     fetchedIssues.push({
-//                         ...res.data[key],
-//                         id: key
-//                     });
-//                 }
-//                 dispatch(fetchIssuesSuccess(fetchedIssues));
-//             })
-//             .catch(err => {
-//                 dispatch(fetchIssuesFail(err));
-//             })
-//     }
-// }
-
 export const fetchAllAuthorizedIssues = (token, userId) => {
     return dispatch => {
         dispatch(fetchIssuesStart());
@@ -94,14 +73,20 @@ export const fetchAllAuthorizedIssues = (token, userId) => {
             .then(res => {
                 let issues = [];
 
-                console.log(`[store action issue] [fetchAllAuthorizedIssues]  res.data`,  res.data);
                 for (const projectName in res.data) {
                     if (res.data.hasOwnProperty(projectName)) {
                         const projectData = res.data[projectName];
 
                         if (projectData['access'] && projectData['access'][userId]) {
-                            console.log(`[store action issue] [fetchAllAuthorizedIssues] ${projectName} accesssable`);
-                            issues.concat(res.data[projectName]['issues']);
+                            issues = issues.concat(res.data[projectName]['issues']);
+                            console.log(`----------issues`, issues);
+
+                            for (const key in res.data[projectName]['issues']) {
+                                issues.push({
+                                    ...res.data[projectName]['issues'][key],
+                                    id: key
+                                });
+                            }
                         }
                         else {
                             console.log(`[store action issue] [fetchAllAuthorizedIssues] ${projectName} unauthorized`);
@@ -109,20 +94,7 @@ export const fetchAllAuthorizedIssues = (token, userId) => {
                     }
                 }
 
-
-
-
-                console.log(`[store actions issue] [fetchAllAuthorizedIssues] res:`, res);
-                const fetchedIssues = [];
-                for (const key in res.data) {
-                    fetchedIssues.push({
-                        ...res.data[key],
-                        id: key
-                    });
-                }
-                console.log(`[store actions issue] [fetchAllAuthorizedIssues] fetchedIssues:`, fetchedIssues);
-
-                const fetchedIssuesMapped = fetchedIssues.map(dataEntry => {
+                const fetchedIssuesMapped = issues.map(dataEntry => {
                     return {
                         "project": dataEntry.issueProject || '-',
                         "createdDate": dataEntry.issueCreated || '-',
@@ -137,8 +109,6 @@ export const fetchAllAuthorizedIssues = (token, userId) => {
                 });
 
                 console.log(`[store actions issue] [fetchAllAuthorizedIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
-
-
 
                 dispatch(fetchIssuesSuccess(fetchedIssuesMapped));
             })
