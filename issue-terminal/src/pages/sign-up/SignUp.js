@@ -14,7 +14,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-class RegisterPage extends Component {
+class SignUpPage extends Component {
     state = {
         controls: {
             email: {
@@ -158,4 +158,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(RegisterPage, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(SignUpPage, axios));

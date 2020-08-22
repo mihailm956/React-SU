@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import style from './home-page.module.css';
 import PageLayout from '../../components/pageLayout/PageLayout';
 
-class homePage extends Component {
+class HomePage extends Component {
     render() {
         return (
             <PageLayout>
@@ -13,4 +13,4 @@ class homePage extends Component {
     }
 }
 
-export default homePage;
+export default HomePage;
