@@ -15,25 +15,27 @@ class NewIssue extends Component {
     }
 
     componentDidMount() {
+        console.log(`[NewIssue] [componentDidMount] start`);
         this.setState({ loading: true })
         const queryParams = '?auth=' + this.props.token + '&orderBy="userId"&equalTo="' + this.props.userId + '"'
         // const queryParams = '?auth=' + this.props.token + '&orderBy="email"&equalTo="' + this.props.email + '"'
-        axios.get('https://reactworkshop-663c6.firebaseio.com/accounts.json' + queryParams)
+        axios.get('https://reactworkshop-663c6.firebaseio.com/projects.json')
             .then(res => {
-                // const projectAccess = res.data.projectAccess.split(", ");
-                const projectAccess = [];
-                for (const key in res.data) {
-                    projectAccess.push({
-                        ...res.data[key],
-                        id: key
-                    });
-                }
+                let access = [];
 
-                let access = '';
-                if (projectAccess[0] && projectAccess[0].projectAccess) {
-                    access = projectAccess[0].projectAccess.split(', ');
-                    console.log(`[new-issue] [componentDidMount] user has access to : `, access);
-                };
+                for (const projectName in res.data) {
+                    if (res.data.hasOwnProperty(projectName)) {
+                        const projectData = res.data[projectName];
+
+                        if (projectData['access'] && projectData['access'][this.props.userId]) {
+                            console.log(`[new-issue] [componentDidMount] ${projectName} accesssable`);
+                            access.push(projectName);
+                        }
+                        else {
+                            console.log(`[new-issue] [componentDidMount] ${projectName} unauthorized`);
+                        }
+                    }
+                }
 
                 this.setState({
                     loading: false,

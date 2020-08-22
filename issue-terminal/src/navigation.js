@@ -15,6 +15,7 @@ import SignInPage from './pages/sign-in/SignIn';
 import SignOutPage from './pages/sign-out/SignOut';
 import ProfilePage from './pages/profile/Profile';
 import ErrorPage from './pages/error/ErrorPage';
+import AdminPage from './pages/admin/AdminPage';
 
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
@@ -40,6 +41,7 @@ class Navigation extends Component {
                         {this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
                     <Route path="/profile/:id" component={ProfilePage} ></Route>
+                    <Route path="/admin" component={AdminPage} ></Route>
                     <Route component={ErrorPage} />
                 </Switch>
             </BrowserRouter>

@@ -70,7 +70,6 @@ class IssuesPage extends Component {
     }
 
     render() {
-        console.log('-----------this.props.issues ', this.props.issues);
         let table = <Spinner />
 
         if (!this.props.loading) {

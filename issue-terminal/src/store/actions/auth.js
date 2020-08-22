@@ -93,8 +93,8 @@ export const auth = (email, password, isSignUp) => {
 
 const saveUserDataInDB = (id, email) => {
     return new Promise((resolve, reject) => {
-        let url = 'https://reactworkshop-663c6.firebaseio.com/accounts.json';
-        let data = { userId: id, email, projectAccess: [] }
+        let url = `https://reactworkshop-663c6.firebaseio.com/accounts/${id}.json`;
+        let data = { email }
 
         axios.post(url, data)
             .then(result => {

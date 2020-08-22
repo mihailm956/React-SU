@@ -28,7 +28,7 @@ export const createIssue = (issueData, token) => {
 
         console.log(`[Register Issue] [store actions issue] [createIssue] issueData `, issueData);
 
-        axios.post('/issues.json?auth=' + token, issueData)
+        axios.post(`projects/${issueData.issueProject}/issues.json?auth=` + token, issueData)
             .then(response => {
                 dispatch(createIssueSuccess(response.data.name, issueData))
                 console.log(`[Register Issue] [store actions issue] [createIssue] success`);
