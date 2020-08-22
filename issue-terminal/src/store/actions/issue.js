@@ -66,6 +66,13 @@ export const fetchIssuesStart = () => {
     }
 }
 
+export const setNewIssueRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_NEW_ISSUE_REDIRECT_PATH,
+        path: path
+    }
+};
+
 export const fetchAllAuthorizedIssues = (token, userId) => {
     return dispatch => {
         dispatch(fetchIssuesStart());

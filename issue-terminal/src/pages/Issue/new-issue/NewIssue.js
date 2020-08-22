@@ -4,6 +4,7 @@ import PageLayout from '../../../components/pageLayout/PageLayout';
 import SubmitForm from '../../../components/ui/forms/submit/SubmitForm';
 import Spinner from '../../../components/ui/spinner/Spinner';
 
+import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -11,7 +12,8 @@ import axios from 'axios';
 class NewIssue extends Component {
     state = {
         loading: true,
-        projectAccess: ''
+        projectAccess: '',
+        calledOnce: false
     }
 
     componentDidMount() {
@@ -82,13 +84,21 @@ class NewIssue extends Component {
     render() {
         let form = <Spinner />;
 
-        if (!this.state.loading) {
+        if (!this.state.loading && !this.props.loading) {
             form = <SubmitForm submitHandler={this.formDataHandler} options={this.state.projectAccess} />;
         }
 
+        let authRedirect = null;
+        // if (this.props.uploadingIssueToDbCompleted && !this.state.calledOnce) {
+        //     this.setState({ calledOnce: true })
+        //     console.log('------------------this.props.newIssueRedirectPath = ' + this.props.newIssueRedirectPath);
+        //     authRedirect = <Redirect to="/issues" />
+        //     //     authRedirect = <Redirect to={this.props.newIssueRedirectPath} />
+        // }
 
         return (
             <PageLayout>
+                {authRedirect}
                 <main >
                     {form}
                 </main>
@@ -103,12 +113,13 @@ const mapStateToProps = state => {
         token: state.auth.token,
         userId: state.auth.userId,
         email: state.auth.userEmail,
+        loading: state.issue.loading,
+        uploadingIssueToDbCompleted: state.issue.uploadingIssueToDbCompleted,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         onCreateIssue: (issueData, token) => dispatch(actions.createIssue(issueData, token)),
-        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 

@@ -9,4 +9,5 @@ export {
     createIssueInit,
     createIssue,
     fetchAllAuthorizedIssues,
+    setNewIssueRedirectPath
 } from './issue';
