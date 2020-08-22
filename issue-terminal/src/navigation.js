@@ -13,6 +13,7 @@ import NewIssuePage from './pages/Issue/new-issue/NewIssue';
 import SignUpPage from './pages/sign-up/SignUp';
 import SignInPage from './pages/sign-in/SignIn';
 import SignOutPage from './pages/sign-out/SignOut';
+import ProfilePage from './pages/profile/Profile';
 import ErrorPage from './pages/error/ErrorPage';
 
 import { connect } from 'react-redux';
@@ -38,6 +39,7 @@ class Navigation extends Component {
                     <Route path="/issues/:id" component={SingleIssuePage} >
                         {this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>
+                    <Route path="/profile/:id" component={ProfilePage} ></Route>
                     <Route component={ErrorPage} />
                 </Switch>
             </BrowserRouter>

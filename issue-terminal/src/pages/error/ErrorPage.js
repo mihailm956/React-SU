@@ -5,7 +5,7 @@ import PageLayout from '../../components/pageLayout/PageLayout';
 const ErrorPage = () => {
     return (
         <PageLayout>
-            <div>Error Page</div>
+            <div>Error Pageee</div>
         </PageLayout>
     );
 };
