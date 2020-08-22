@@ -38,12 +38,12 @@ const authFetch = (isSignUp) => {
 
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${webAPIKey}`;
 
-    if (!isSignUp) {
-        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${webAPIKey}`;
-    }
+    // if (!isSignUp) {
+    //     url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${webAPIKey}`;
+    // }
 
     const authData = {
-        email: 'test@abv.bg',
+        email: 'test23@abv.bg',
         password: '123456',
         returnSecureToken: true
     }
