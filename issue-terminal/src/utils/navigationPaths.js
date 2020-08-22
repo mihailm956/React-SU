@@ -1,4 +1,4 @@
-const getNavigation = (loggedIn, user) => {
+const getNavigation = (loggedIn, userId) => {
 
     const authLinks = [
         {
@@ -11,7 +11,7 @@ const getNavigation = (loggedIn, user) => {
         },
         {
             title: "Profile",
-            link: `/profile/${user && user.id}`
+            link: `/profile/${userId}`
         },
         {
             title: "SignOut",
@@ -23,10 +23,6 @@ const getNavigation = (loggedIn, user) => {
         {
             title: "Home",
             link: "/"
-        },
-        {
-            title: "Issues",
-            link: "/issues"
         },
         {
             title: "Sign In",

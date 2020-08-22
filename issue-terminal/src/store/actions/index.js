@@ -8,5 +8,6 @@ export {
 export {
     createIssueInit,
     createIssue,
-    fetchAllIssues,
+    fetchAllAuthorizedIssues,
+    setNewIssueRedirectPath
 } from './issue';

@@ -7,7 +7,7 @@ import getNavigation from '../../utils/navigationPaths';
 
 class NavigationItems extends Component {
     render() {
-        let reacablePaths = getNavigation(this.props.isAuthenticated);
+        let reacablePaths = getNavigation(this.props.isAuthenticated, this.props.userId);
 
         let linksToNavigate = reacablePaths.map((navElement) => {
             return (
@@ -27,7 +27,8 @@ class NavigationItems extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.token !== null, 
+        userId: state.auth.userId
     }
 }
 
