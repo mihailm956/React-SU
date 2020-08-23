@@ -32,7 +32,7 @@ const Table = ({ columns, data, onRowClick }) => {
 
   return (
     <MaterialTable
-      title="The Money Printer Goes Brrrrrrr"
+      title="Currently Active Issues For You"
       columns={state.columns.map(item => {
           console.log('CURRENT ITEM', item);
           const column = {
@@ -69,17 +69,17 @@ const Table = ({ columns, data, onRowClick }) => {
         //       }
         //     }, 600);
         //   }),
-        onRowDelete: (oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
+        // onRowDelete: (oldData) =>
+        //   new Promise((resolve) => {
+        //     setTimeout(() => {
+        //       resolve();
+        //       setState((prevState) => {
+        //         const data = [...prevState.data];
+        //         data.splice(data.indexOf(oldData), 1);
+        //         return { ...prevState, data };
+        //       });
+        //     }, 600);
+        //   }),
       }}
     />
   );

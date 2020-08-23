@@ -85,7 +85,7 @@ export const fetchAllAuthorizedIssues = (token, userId) => {
                         const projectData = res.data[projectName];
 
                         if (projectData['access'] && projectData['access'][userId]) {
-                            issues = issues.concat(res.data[projectName]['issues']);
+                            // issues = issues.concat(res.data[projectName]['issues']);
                             console.log(`----------issues`, issues);
 
                             for (const key in res.data[projectName]['issues']) {

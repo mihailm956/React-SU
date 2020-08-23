@@ -14,7 +14,7 @@ class IssuesPage extends Component {
     state = {
         columns: [
             {
-                Header: 'Issue',
+                Header: 'Issue Title',
                 accessor: 'issue',
             },
             {
