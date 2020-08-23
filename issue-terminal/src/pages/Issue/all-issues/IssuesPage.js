@@ -66,11 +66,11 @@ class IssuesPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchAllIssues(this.props.token, this.props.userId);
+        console.log(`--[all-issues] [componentDidMount] his.props.userId `, this.props.userId);
+        this.props.fetchAllAuthorizedIssues(this.props.token, this.props.userId);
     }
 
     render() {
-        console.log('-----------this.props.issues ', this.props.issues);
         let table = <Spinner />
 
         if (!this.props.loading) {
@@ -101,7 +101,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllIssues: (token, userId) => dispatch(actions.fetchAllIssues(token, userId))
+        fetchAllAuthorizedIssues: (token, userId) => dispatch(actions.fetchAllAuthorizedIssues(token, userId))
     }
 }
 

@@ -28,7 +28,7 @@ export const createIssue = (issueData, token) => {
 
         console.log(`[Register Issue] [store actions issue] [createIssue] issueData `, issueData);
 
-        axios.post('/issues.json?auth=' + token, issueData)
+        axios.post(`projects/${issueData.issueProject}/issues.json?auth=` + token, issueData)
             .then(response => {
                 dispatch(createIssueSuccess(response.data.name, issueData))
                 console.log(`[Register Issue] [store actions issue] [createIssue] success`);
@@ -66,43 +66,42 @@ export const fetchIssuesStart = () => {
     }
 }
 
-// export const fetchOnlyUserIssues = (token, userId) => {
-//     return dispatch => {
-//         dispatch(fetchIssuesStart());
-//         const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"'
-//         axios.get('/issues.json' + queryParams)
-//             .then(res => {
-//                 const fetchedIssues = [];
-//                 for (const key in res.data) {
-//                     fetchedIssues.push({
-//                         ...res.data[key],
-//                         id: key
-//                     });
-//                 }
-//                 dispatch(fetchIssuesSuccess(fetchedIssues));
-//             })
-//             .catch(err => {
-//                 dispatch(fetchIssuesFail(err));
-//             })
-//     }
-// }
+export const setNewIssueRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_NEW_ISSUE_REDIRECT_PATH,
+        path: path
+    }
+};
 
-export const fetchAllIssues = (token, userId) => {
+export const fetchAllAuthorizedIssues = (token, userId) => {
     return dispatch => {
         dispatch(fetchIssuesStart());
-        axios.get('/issues.json')
+        axios.get('/projects.json')
             .then(res => {
-                console.log(`[store actions issue] [fetchAllIssues] res:`, res);
-                const fetchedIssues = [];
-                for (const key in res.data) {
-                    fetchedIssues.push({
-                        ...res.data[key],
-                        id: key
-                    });
-                }
-                console.log(`[store actions issue] [fetchAllIssues] fetchedIssues:`, fetchedIssues);
+                let issues = [];
 
-                const fetchedIssuesMapped = fetchedIssues.map(dataEntry => {
+                for (const projectName in res.data) {
+                    if (res.data.hasOwnProperty(projectName)) {
+                        const projectData = res.data[projectName];
+
+                        if (projectData['access'] && projectData['access'][userId]) {
+                            issues = issues.concat(res.data[projectName]['issues']);
+                            console.log(`----------issues`, issues);
+
+                            for (const key in res.data[projectName]['issues']) {
+                                issues.push({
+                                    ...res.data[projectName]['issues'][key],
+                                    id: key
+                                });
+                            }
+                        }
+                        else {
+                            console.log(`[store action issue] [fetchAllAuthorizedIssues] ${projectName} unauthorized`);
+                        }
+                    }
+                }
+
+                const fetchedIssuesMapped = issues.map(dataEntry => {
                     return {
                         "project": dataEntry.issueProject || '-',
                         "createdDate": dataEntry.issueCreated || '-',
@@ -116,9 +115,7 @@ export const fetchAllIssues = (token, userId) => {
                     }
                 });
 
-                console.log(`[store actions issue] [fetchAllIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
-
-
+                console.log(`[store actions issue] [fetchAllAuthorizedIssues] fetchedIssuesMapped:`, fetchedIssuesMapped);
 
                 dispatch(fetchIssuesSuccess(fetchedIssuesMapped));
             })

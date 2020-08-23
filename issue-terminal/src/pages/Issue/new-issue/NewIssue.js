@@ -3,6 +3,7 @@ import PageLayout from '../../../components/pageLayout/PageLayout';
 import SubmitForm from '../../../components/ui/forms/submit/SubmitForm';
 import Spinner from '../../../components/ui/spinner/Spinner';
 import { toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -12,29 +13,32 @@ import 'react-toastify/dist/ReactToastify.css';
 class NewIssue extends Component {
     state = {
         loading: true,
-        projectAccess: ''
+        projectAccess: '',
+        calledOnce: false
     }
 
     componentDidMount() {
+        console.log(`[NewIssue] [componentDidMount] start`);
         this.setState({ loading: true })
         const queryParams = '?auth=' + this.props.token + '&orderBy="userId"&equalTo="' + this.props.userId + '"'
         // const queryParams = '?auth=' + this.props.token + '&orderBy="email"&equalTo="' + this.props.email + '"'
-        axios.get('https://reactworkshop-663c6.firebaseio.com/accounts.json' + queryParams)
+        axios.get('https://reactworkshop-663c6.firebaseio.com/projects.json')
             .then(res => {
-                // const projectAccess = res.data.projectAccess.split(", ");
-                const projectAccess = [];
-                for (const key in res.data) {
-                    projectAccess.push({
-                        ...res.data[key],
-                        id: key
-                    });
-                }
+                let access = [];
 
-                let access = '';
-                if (projectAccess[0] && projectAccess[0].projectAccess) {
-                    access = projectAccess[0].projectAccess.split(', ');
-                    console.log(`[new-issue] [componentDidMount] user has access to : `, access);
-                };
+                for (const projectName in res.data) {
+                    if (res.data.hasOwnProperty(projectName)) {
+                        const projectData = res.data[projectName];
+
+                        if (projectData['access'] && projectData['access'][this.props.userId]) {
+                            console.log(`[new-issue] [componentDidMount] ${projectName} accesssable`);
+                            access.push(projectName);
+                        }
+                        else {
+                            console.log(`[new-issue] [componentDidMount] ${projectName} unauthorized`);
+                        }
+                    }
+                }
 
                 this.setState({
                     loading: false,
@@ -54,7 +58,7 @@ class NewIssue extends Component {
         console.log('formData', formData);
         console.log('selectedProject', event.target.elements.selectedProject.value);
         console.log('name', event.target.elements.name.value);
-        console.log('name', event.target.elements.dueDate.value);
+        console.log('dueDate', event.target.elements.dueDate.value);
         console.log('severity', event.target.elements.severity.value);
         console.log('reproducible', event.target.elements.reproducible.value);
         console.log('details', event.target.elements.details.value);
@@ -113,13 +117,21 @@ class NewIssue extends Component {
     render() {
         let form = <Spinner />;
 
-        if (!this.state.loading) {
+        if (!this.state.loading && !this.props.loading) {
             form = <SubmitForm submitHandler={this.formDataHandler} options={this.state.projectAccess} />;
         }
 
+        let authRedirect = null;
+        // if (this.props.uploadingIssueToDbCompleted && !this.state.calledOnce) {
+        //     this.setState({ calledOnce: true })
+        //     console.log('------------------this.props.newIssueRedirectPath = ' + this.props.newIssueRedirectPath);
+        //     authRedirect = <Redirect to="/issues" />
+        //     //     authRedirect = <Redirect to={this.props.newIssueRedirectPath} />
+        // }
 
         return (
             <PageLayout>
+                {authRedirect}
                 <main >
                     {form}
                 </main>
@@ -133,12 +145,13 @@ const mapStateToProps = state => {
         token: state.auth.token,
         userId: state.auth.userId,
         email: state.auth.userEmail,
+        loading: state.issue.loading,
+        uploadingIssueToDbCompleted: state.issue.uploadingIssueToDbCompleted,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         onCreateIssue: (issueData, token) => dispatch(actions.createIssue(issueData, token)),
-        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 
