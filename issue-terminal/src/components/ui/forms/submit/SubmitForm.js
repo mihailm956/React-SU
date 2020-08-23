@@ -32,6 +32,7 @@ span {
 }
 form {
     width: 600px;
+    height:100%;
     padding: 20px;
     background: #fff;
     box-shadow: 0 2px 5px #ccc;
