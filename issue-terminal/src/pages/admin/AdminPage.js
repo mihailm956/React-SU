@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Spinner from '../../components/ui/spinner/Spinner';
 import StyledButton from '../../components/ui/styledButton/StyledButton';
+import PageLayout from '../../components/pageLayout/PageLayout';
 
 class AdminPage extends Component {
 
@@ -130,7 +131,9 @@ class AdminPage extends Component {
 
         return (
             <div>
-                {form}
+                <PageLayout>
+                    {form}
+                </PageLayout>
             </div>
         )
     }

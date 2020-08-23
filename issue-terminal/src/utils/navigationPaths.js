@@ -6,6 +6,10 @@ const getNavigation = (loggedIn, userId) => {
             link: "/"
         },
         {
+            title: "Admin",
+            link: "/admin"
+        },
+        {
             title: "Issues",
             link: "/issues"
         },
