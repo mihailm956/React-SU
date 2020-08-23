@@ -2,5 +2,3 @@ https://reactworkshop-663c6.firebaseapp.com
 
 
 // upload to web
-
-// fix navigation when we select differetnt page than home

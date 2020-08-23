@@ -36,7 +36,7 @@ class SignInPage extends Component {
             password: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'text',
+                    type: 'password',
                     placeholder: 'password'
                 },
                 value: '',

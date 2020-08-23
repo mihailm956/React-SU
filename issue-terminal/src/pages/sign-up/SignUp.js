@@ -36,7 +36,7 @@ class SignUpPage extends Component {
             password: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'text',
+                    type: 'password',
                     placeholder: 'password'
                 },
                 value: '',
@@ -50,7 +50,7 @@ class SignUpPage extends Component {
             rePassword: {
                 elementType: 'input',
                 elementConfig: {
-                    type: 'text',
+                    type: 'password',
                     placeholder: 'repeat password'
                 },
                 value: '',
