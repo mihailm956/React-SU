@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './backGroundImage.module.css';
 
-export default class backGroundImage extends Component {
+export default class BackGroundImage extends Component {
   render() {
     return (
         <div className="container">

@@ -81,9 +81,9 @@ class SignInPage extends Component {
         }
         if(validForm){
             this.props.onAuth(fieldData.email, fieldData.password, false)
-            toast.success("Succesfully logged in", {
-                position: toast.POSITION.TOP_RIGHT
-            })
+            // toast.success("Succesfully logged inxxxx", {
+            //     position: toast.POSITION.TOP_RIGHT
+            // })
         }
     }
 

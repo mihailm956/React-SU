@@ -34,7 +34,9 @@ class Navigation extends Component {
                     <Route path="/sign-in" component={SignInPage} />
                     <Route path="/sign-out" component={SignOutPage} />
                     <Route path="/issues" exact component={IssuesPage} />
-                    <Route path="/issues/new" exact component={NewIssuePage} />
+                    <Route path="/issues/new" exact >
+                        {this.props.isAuthenticated ? (<NewIssuePage />) : (<Redirect to="/issues" />)}
+                    </Route>
                     <Route path="/issues/:id" component={SingleIssuePage} >
                         {this.props.isAuthenticated ? (<SingleIssuePage />) : (<Redirect to="/issues" />)}
                     </Route>

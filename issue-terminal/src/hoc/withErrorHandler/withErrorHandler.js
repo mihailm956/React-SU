@@ -16,18 +16,29 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         componentWillMount() {
             this.reqInterceptor = axios.interceptors.request.use(req => {
+
                 this.setState({ error: null })
                 return req;
             })
-            this.resInterceptor = axios.interceptors.response.use(res => res, err => {
+            this.resInterceptor = axios.interceptors.response.use(res => {
+                toast.success("Succesfully logged in !!!", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                
+                return res
+            }, err => {
+                toast.error(`"ERROR:${err}"`, {
+                    position: toast.POSITION.TOP_RIGHT
+                });
                 this.setState({ error: err });
-            }) 
+            })
         }
 
         errorConfirmedHandler = () => {
             this.setState({ error: null })
-             toast.error("ERROR: Something bad happened", {
-                position: toast.POSITION.TOP_RIGHT });
+            toast.error("ERROR: Something bad happened", {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
 
         componentWillUnmount() {
@@ -38,11 +49,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
         render() {
             return (
                 <Fragment>
-                    <Modal
+                    {/* <Modal
                         show={this.state.error}
                         modalClosed={this.errorConfirmedHandler}>
                         {this.state.error ? this.state.error.message : null}
-                    </Modal>
+                    </Modal> */}
                     <WrappedComponent {...this.props} />
                 </Fragment>
             );
@@ -53,4 +64,3 @@ const withErrorHandler = (WrappedComponent, axios) => {
 export default withErrorHandler;
 
 
-  
