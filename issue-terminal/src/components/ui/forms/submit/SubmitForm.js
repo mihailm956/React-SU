@@ -190,7 +190,7 @@ const submitForm = (props) => {
                                 <label><input type="radio" value="none" name="Dine" /> Dine In</label>
                                 <label><input type="radio" value="none" name="Dine" /> Take Out</label>
                             </div> */}
-                        <h4>Age<span>*</span></h4>
+                        {/* <h4>Age<span>*</span></h4>
                         <select defaultValue={'DEFAULT'}>
                             <option value="DEFAULT" disabled>Choose a salutation ...</option>
                             <option value="under 13">Under 13</option>
@@ -200,7 +200,7 @@ const submitForm = (props) => {
                             <option value="35-44">35-44</option>
                             <option value="45-54">45-54</option>
                             <option value="55 or older">55 or older</option>
-                        </select>
+                        </select> */}
                         {/* <h4>Untitled</h4> */}
                         <br />
                         <table>
