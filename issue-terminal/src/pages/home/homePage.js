@@ -23,7 +23,7 @@ class HomePage extends Component {
                         <div className={style.MultipleContainers}>
                             <div className={style.Advantages}>
                                 <img src={IconAccess} alt="Issue-Terminal" />
-                                role based access
+                                Specify who has access to what
                             </div>
                             <div className={style.Advantages}>
                                 <img src={IconDate} alt="Issue-Terminal" />
@@ -31,7 +31,7 @@ class HomePage extends Component {
                             </div>
                             <div className={style.Advantages}>
                                 <img src={IconEdit} alt="Issue-Terminal" />
-                                Easly edit ongoing bugs
+                                Easily edit ongoing bugs
                             </div>
                         </div>
                     </div>

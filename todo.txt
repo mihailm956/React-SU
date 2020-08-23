@@ -1,10 +1,7 @@
 https://reactworkshop-663c6.firebaseapp.com
 
-// when we enter an invalid route, the browser window refreshes ?
-// in localhost:3000/issue -> set the submit button to be at center
-// in http://localhost:3000/issues/new -> dont allow to submit an empty form
-// in http://localhost:3000/profile/undefined -> display user data: 
-    -- access to issues in projects 
-    -- issues currently working 
-    -- completed issues
-        
+// admin - remove empty entires in Users dropdow
+// 
+// upload to web
+
+// fix navigation when we select differetnt page than home
