@@ -1,3 +1,29 @@
 .Container {
-    /* margin-top: 72px; */
+    margin: 20px auto;
+    width: 40%;
+    text-align: center;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    word-wrap: break-word;
+}
+
+
+.Container img {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+
+.MultipleContainers {
+    display: flex;
+}
+
+.Advantages {
+    margin: 5px;
+    padding: 5px;
 }
